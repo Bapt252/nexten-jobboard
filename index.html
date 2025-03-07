@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexten - Plateforme d'Emploi</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Nexten</h1>
+                <p>Trouvez votre prochain emploi</p>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Accueil</a></li>
+                    <li><a href="#">Offres</a></li>
+                    <li><a href="#">Entreprises</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-outline" id="login-btn">Connexion</button>
+                <button class="btn btn-primary" id="publish-btn">Publier une offre</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Trouvez l'emploi idéal pour vous</h2>
+            <p>Des milliers d'offres d'emploi disponibles à travers toute la France</p>
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Titre, entreprise, mots-clés...">
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" id="location-input" placeholder="Ville ou code postal">
+                </div>
+                <button class="btn btn-primary search-btn">Rechercher</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="container">
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label>Catégorie</label>
+                    <select id="category-filter">
+                        <option value="">Toutes les catégories</option>
+                        <option value="dev">Développement</option>
+                        <option value="design">Design</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="sales">Ventes</option>
+                        <option value="support">Support Client</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Type de contrat</label>
+                    <select id="contract-filter">
+                        <option value="">Tous les contrats</option>
+                        <option value="cdi">CDI</option>
+                        <option value="cdd">CDD</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="stage">Stage</option>
+                        <option value="alternance">Alternance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Expérience</label>
+                    <select id="experience-filter">
+                        <option value="">Toutes les expériences</option>
+                        <option value="junior">Débutant (0-2 ans)</option>
+                        <option value="mid">Intermédiaire (2-5 ans)</option>
+                        <option value="senior">Confirmé (5+ ans)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Salaire</label>
+                    <select id="salary-filter">
+                        <option value="">Tous les salaires</option>
+                        <option value="0-30000">< 30 000 €</option>
+                        <option value="30000-50000">30 000 € - 50 000 €</option>
+                        <option value="50000-70000">50 000 € - 70 000 €</option>
+                        <option value="70000+">70 000 € +</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-tags" id="filter-tags">
+                <!-- Tags seront générés dynamiquement via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="jobs">
+        <div class="container">
+            <div class="jobs-header">
+                <h3>Offres d'emploi récentes</h3>
+                <div class="jobs-count"><span id="jobs-count">0</span> offres trouvées</div>
+            </div>
+            <div class="jobs-list" id="jobs-list">
+                <!-- Jobs will be loaded dynamically via JavaScript -->
+            </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be generated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="job-form-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Publier une offre d'emploi</h2>
+            <form id="job-form">
+                <div class="form-group">
+                    <label for="job-title">Titre de l'offre*</label>
+                    <input type="text" id="job-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="company-name">Nom de l'entreprise*</label>
+                    <input type="text" id="company-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-location">Localisation*</label>
+                    <input type="text" id="job-location" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="job-category">Catégorie*</label>
+                        <select id="job-category" required>
+                            <option value="">Sélectionner</option>
+                            <option value="dev">Développement</option>
+                            <option value="design">Design</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="sales">Ventes</option>
+                            <option value="support">Support Client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="job-type">Type de contrat*</label>
+                        <select id="job-type" required>
+                            <option value="">Sélectionner</option>
+                            <option value="cdi">CDI</option>
+                            <option value="cdd">CDD</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="stage">Stage</option>
+                            <option value="alternance">Alternance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="job-experience">Expérience requise*</label>
+                        <select id="job-experience" required>
+                            <option value="">Sélectionner</option>
+                            <option value="junior">Débutant (0-2 ans)</option>
+                            <option value="mid">Intermédiaire (2-5 ans)</option>
+                            <option value="senior">Confirmé (5+ ans)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="job-salary">Salaire annuel (€)</label>
+                        <input type="number" id="job-salary" placeholder="Optionnel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="job-description">Description du poste*</label>
+                    <textarea id="job-description" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="job-requirements">Compétences requises*</label>
+                    <textarea id="job-requirements" rows="4" required placeholder="Saisissez les compétences séparées par des virgules"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="application-email">Email de contact*</label>
+                    <input type="email" id="application-email" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-job-form">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Publier l'offre</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Nexten</h2>
+                    <p>La plateforme qui connecte les talents aux meilleures entreprises</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Offres d'emploi</h4>
+                        <ul>
+                            <li><a href="#">Par catégorie</a></li>
+                            <li><a href="#">Par ville</a></li>
+                            <li><a href="#">Par entreprise</a></li>
+                            <li><a href="#">Par type de contrat</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Entreprises</h4>
+                        <ul>
+                            <li><a href="#">Publier une offre</a></li>
+                            <li><a href="#">Consulter les CV</a></li>
+                            <li><a href="#">Créer un compte</a></li>
+                            <li><a href="#">Tarifs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>À propos</h4>
+                        <ul>
+                            <li><a href="#">Qui sommes-nous</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Témoignages</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexten. Tous droits réservés.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="services/jobService.js"></script>
+    <script src="components/jobCard.js"></script>
+    <script src="components/pagination.js"></script>
+    <script src="components/filters.js"></script>
+    <script src="components/jobForm.js"></script>
+    <script src="pages/index.js"></script>
+</body>
+</html>
